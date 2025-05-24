@@ -269,5 +269,8 @@ if __name__ == '__main__':
     event_engine.start()
     event_engine.register(EVENT_TIMER, timer_event)
     event_engine.register(EVENT_SIGNAL, signal_event)
+    
+    import os
 
-    app.run(host='127.0.0.1', port=8888, debug=False)
+port = int(os.environ.get('PORT', 8888))  # Render平台会提供PORT环境变量
+app.run(host='0.0.0.0', port=port, debug=False)
