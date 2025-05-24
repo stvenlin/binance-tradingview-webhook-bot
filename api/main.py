@@ -268,6 +268,8 @@ if __name__ == '__main__':
     event_engine = EventEngine(interval=1)  # you can update the loop interval.
     event_engine.start()
     event_engine.register(EVENT_TIMER, timer_event)
-    event_engine.register(EVENT_SIGNAL, import os
-port = int(os.environ.get('PORT', 8888))
-app.run(host='0.0.0.0', port=port, debug=False)
+    event_engine.register(EVENT_SIGNAL, 
+    
+    import os
+    port = int(os.environ.get('PORT', 8888))
+    app.run(host='0.0.0.0', port=port, debug=False)
