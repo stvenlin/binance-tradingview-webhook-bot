@@ -253,23 +253,23 @@ def signal_event(event: Event):
         # write your logic code here.
 
 
+      import os
+
 if __name__ == '__main__':
     future_signal_dict = {}
     spot_signal_dict = {}
-
     future_strategy_order_dict = {}
 
     cancel_orders_timer = 0  # 撤单的timer.
-    query_orders_timer = 0 # 查询订单的tismer.
+    query_orders_timer = 0   # 查询订单的timer.
 
     binance_spot_client = BinanceSpotHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
     binance_future_client = BinanceFutureHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
 
-    event_engine = EventEngine(interval=1)  # you can update the loop interval.
+    event_engine = EventEngine(interval=1)
     event_engine.start()
     event_engine.register(EVENT_TIMER, timer_event)
-    event_engine.register(EVENT_SIGNAL, 
+    event_engine.register(EVENT_SIGNAL, signal_event)
 
-     import os
-port = int(os.environ.get("PORT", 10000))
-app.run(host='0.0.0.0', port=port)             
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)         
