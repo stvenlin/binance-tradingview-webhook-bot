@@ -1,6 +1,6 @@
 # the following is the configuration for your tradingview webhook bot
 
-# WEBHOOK_PASSPHRASE = "your password like"   # the password for security, must be the same from tradingview webhook settings.
+# WEBHOOK_PASSPHRASE = "goh1998"   # the password for security, must be the same from tradingview webhook settings.
 # API_KEY = 'past your api secret here.'
 # API_SECRET = 'past your api secret here.'
 
