@@ -1,5 +1,6 @@
 import os
 import json
+from trade import future_trade
 from decimal import Decimal
 from util import floor_to
 from api.constant import OrderSide, OrderType
@@ -25,8 +26,7 @@ def webhook():
         if data.get('passphrase', None) != config.WEBHOOK_PASSPHRASE:
             return "failure: passphrase is incorrect."
 
-        event = Event(EVENT_SIGNAL, data=data)
-        event_engine.put(event)
+        future_trade(data)
 
         return "success"
     except Exception as error:
