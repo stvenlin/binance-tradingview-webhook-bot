@@ -1,6 +1,5 @@
 import os
 import json
-from api.future_trade_handler import future_trade
 from decimal import Decimal
 
 import config
@@ -31,6 +30,79 @@ def webhook():
     except Exception as error:
         print(f"error: {error}")
         return "failure"
+
+
+        from decimal import Decimal
+from util import floor_to
+from constant import OrderSide, OrderType
+
+def future_trade(data: dict):
+    symbol = data.get("symbol")
+    action = data.get("action", "").upper()
+    entry_price = float(data.get("price", 0))
+    tp = float(data.get("tp", 0))
+    sl = float(data.get("sl", 0))
+
+    # 获取账户余额
+    account_info = binance_future_client.get_account_info()[1]
+    usdt_balance = Decimal("0")
+    for asset in account_info.get("assets", []):
+        if asset["asset"] == "USDT":
+            usdt_balance = Decimal(asset["walletBalance"])
+            break
+
+    # 获取交易精度
+    exchange_info = binance_future_client.exchangeInfo()[1]
+    symbol_info = next(s for s in exchange_info["symbols"] if s["symbol"] == symbol)
+    qty_step_size = Decimal("1.0")
+    price_tick_size = Decimal("0.1")
+    for f in symbol_info["filters"]:
+        if f["filterType"] == "LOT_SIZE":
+            qty_step_size = Decimal(f["stepSize"])
+        if f["filterType"] == "PRICE_FILTER":
+            price_tick_size = Decimal(f["tickSize"])
+
+    # 计算下单数量（50% USDT 余额）
+    amount_to_use = usdt_balance * Decimal("0.5")
+    quantity = amount_to_use / Decimal(entry_price)
+    quantity = floor_to(quantity, qty_step_size)
+
+    side = OrderSide.BUY if action == "LONG" else OrderSide.SELL
+    opposite_side = OrderSide.SELL if side == OrderSide.BUY else OrderSide.BUY
+
+    # 市价开单
+    order_id = binance_future_client.get_client_order_id()
+    binance_future_client.place_order(
+        symbol=symbol,
+        order_side=side,
+        order_type=OrderType.MARKET,
+        quantity=quantity,
+        price=Decimal("0"),
+        client_order_id=order_id
+    )
+
+    # 止盈单（限价）
+    binance_future_client.place_order(
+        symbol=symbol,
+        order_side=opposite_side,
+        order_type=OrderType.LIMIT,
+        quantity=quantity,
+        price=floor_to(tp, price_tick_size),
+        time_inforce="GTC"
+    )
+
+    # 止损单（触发）
+    binance_future_client.place_order(
+        symbol=symbol,
+        order_side=opposite_side,
+        order_type=OrderType.STOP,
+        quantity=quantity,
+        price=floor_to(sl, price_tick_size),
+        stop_price=floor_to(sl, price_tick_size),
+        time_inforce="GTC"
+    )
+
+    print(f"{action} {symbol} 成交，数量：{quantity}，TP：{tp}，SL：{sl}")
 
 def timer_event(event: Event):
     global cancel_orders_timer
