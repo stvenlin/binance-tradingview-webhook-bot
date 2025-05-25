@@ -1,6 +1,8 @@
 import os
 import json
 from decimal import Decimal
+from util import floor_to
+from constant import OrderSide, OrderType
 
 import config
 from flask import Flask, request
@@ -30,11 +32,6 @@ def webhook():
     except Exception as error:
         print(f"error: {error}")
         return "failure"
-
-
-        from decimal import Decimal
-from util import floor_to
-from constant import OrderSide, OrderType
 
 def future_trade(data: dict):
     symbol = data.get("symbol")
