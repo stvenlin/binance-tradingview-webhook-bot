@@ -1,6 +1,5 @@
 import os
 import json
-from trade import future_trade
 from decimal import Decimal
 from util import floor_to
 from api.constant import OrderSide, OrderType
