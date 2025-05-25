@@ -1,8 +1,8 @@
 # the following is the configuration for your tradingview webhook bot
 
 # WEBHOOK_PASSPHRASE = "goh1998"   # the password for security, must be the same from tradingview webhook settings.
-# API_KEY = 'past your api secret here.'
-# API_SECRET = 'past your api secret here.'
+# API_KEY = 'kUpE1ZTpdqiabpbhmmKZcAQcnjMP7ncVKDpZIph7iiZIuQmzVyo9CZvVyuLDnQcx'
+# API_SECRET = 'wPuMLkWQrcjpA1PxqKnfcSjfPDthGdmBPUMdWuUkSj0hEWXzIR5H9w91AwpAs31m'
 
 # the passphrase is a string for verifying that prevents others(especially the bad guy) to invoke the POST request in the program.
 # passphrase 字符串是为了验证防止其他人(特别是坏人)去调用你的POST请求接口，这个接口是可以发送下单信号的。
