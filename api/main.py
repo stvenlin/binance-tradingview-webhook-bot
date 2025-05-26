@@ -17,11 +17,11 @@ binance_spot_client = BinanceSpotHttpClient(api_key=config.API_KEY, secret=confi
 binance_future_client = BinanceFutureHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
 
 future_signal_dict = {}
-    spot_signal_dict = {}
-    future_strategy_order_dict = {}
+spot_signal_dict = {}
+future_strategy_order_dict = {}
 
-    cancel_orders_timer = 0
-    query_orders_timer = 0
+cancel_orders_timer = 0
+query_orders_timer = 0
 
 @app.route('/', methods=['GET'])
 def welcome():
