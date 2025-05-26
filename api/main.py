@@ -12,6 +12,10 @@ from event import EventEngine, Event, EVENT_TIMER, EVENT_SIGNAL
 
 app = Flask(__name__)
 
+# 顶部初始化
+binance_spot_client = BinanceSpotHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
+binance_future_client = BinanceFutureHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
+
 @app.route('/', methods=['GET'])
 def welcome():
     return "Hello Flask, This is for testing. If you receive this message, it means your configuration is correct."
