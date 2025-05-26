@@ -16,6 +16,13 @@ app = Flask(__name__)
 binance_spot_client = BinanceSpotHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
 binance_future_client = BinanceFutureHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
 
+future_signal_dict = {}
+    spot_signal_dict = {}
+    future_strategy_order_dict = {}
+
+    cancel_orders_timer = 0
+    query_orders_timer = 0
+
 @app.route('/', methods=['GET'])
 def welcome():
     return "Hello Flask, This is for testing. If you receive this message, it means your configuration is correct."
@@ -171,16 +178,7 @@ def signal_event(event: Event):
 
 
 if __name__ == '__main__':
-    future_signal_dict = {}
-    spot_signal_dict = {}
-    future_strategy_order_dict = {}
-
-    cancel_orders_timer = 0
-    query_orders_timer = 0
-
-    binance_spot_client = BinanceSpotHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
-    binance_future_client = BinanceFutureHttpClient(api_key=config.API_KEY, secret=config.API_SECRET)
-
+     
     event_engine = EventEngine(interval=1)
     event_engine.start()
     event_engine.register(EVENT_TIMER, timer_event)
