@@ -7,9 +7,9 @@
 # the passphrase is a string for verifying that prevents others(especially the bad guy) to invoke the POST request in the program.
 # passphrase 字符串是为了验证防止其他人(特别是坏人)去调用你的POST请求接口，这个接口是可以发送下单信号的。
 
-WEBHOOK_PASSPHRASE = "setting your tradingview passphrase, it's not your tradingview password."
-API_KEY = 'binance exchange api key, remember to edit restriction for future/spot trading'
-API_SECRET = 'api secret'
+WEBHOOK_PASSPHRASE = "goh1998"
+API_KEY = 'kUpE1ZTpdqiabpbhmmKZcAQcnjMP7ncVKDpZIph7iiZIuQmzVyo9CZvVyuLDnQcx'
+API_SECRET = 'wPuMLkWQrcjpA1PxqKnfcSjfPDthGdmBPUMdWuUkSj0hEWXzIR5H9w91AwpAs31m'
 
 CANCEL_ORDERS_IN_SECONDS = 60 # every X second, will cancel your orders
 
