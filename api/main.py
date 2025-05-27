@@ -51,16 +51,28 @@ def future_trade(data: dict):
     sl = float(data.get("sl", 0))
 
     # 获取账户余额
-    account_info = binance_future_client.get_account_info()[1]
+    account_status, account_info = binance_future_client.get_account_info()
+    if account_status != 200:
+        print(f"获取账户信息失败: {account_info}")
+        return
+
     usdt_balance = Decimal("0")
     for asset in account_info.get("assets", []):
         if asset["asset"] == "USDT":
             usdt_balance = Decimal(asset["walletBalance"])
             break
 
-    # 获取交易精度
-    exchange_info = binance_future_client.exchangeInfo()[1]
-    symbol_info = next(s for s in exchange_info["symbols"] if s["symbol"] == symbol)
+    # 获取交易对信息
+    exchange_info_status, exchange_info_data = binance_future_client.exchangeInfo()
+    if exchange_info_status != 200 or "symbols" not in exchange_info_data:
+        print(f"获取 exchangeInfo 失败: {exchange_info_data}")
+        return
+
+    symbol_info = next((s for s in exchange_info_data["symbols"] if s["symbol"] == symbol), None)
+    if symbol_info is None:
+        print(f"找不到交易对 {symbol} 的信息")
+        return
+
     qty_step_size = Decimal("1.0")
     price_tick_size = Decimal("0.1")
     for f in symbol_info["filters"]:
