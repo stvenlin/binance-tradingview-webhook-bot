@@ -64,6 +64,7 @@ def future_trade(data: dict):
 
     # 获取交易对信息
     exchange_info_status, exchange_info_data = binance_future_client.exchangeInfo()
+    print(json.dumps(exchange_info_data, indent=2))
     if exchange_info_status != 200 or "symbols" not in exchange_info_data:
         print(f"获取 exchangeInfo 失败: {exchange_info_data}")
         return
